@@ -1,4 +1,4 @@
-// this code is from http://shell-storm.org/shellcode/files/shellcode-806.php
+// the orginal code is from http://shell-storm.org/shellcode/files/shellcode-806.php
 /*
  * Execute /bin/sh - 27 bytes
  * Dad` <3 baboon
@@ -44,14 +44,18 @@ main:
     syscall
  */
 
-#include <stdio.h>
-#include <string.h>
-
-char code[] = "\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05";
-
-int main()
-{
-    printf("len:%d bytes\n", strlen(code));
-    (*(void(*)()) code)();
-    return 0;
-}
+#include <stdio.h>                                                                                                                                                      
+#include <string.h>                                                                                                                                                     
+                                                                                                                                                                        
+unsigned char code[] = \                                                                                                                                                "\xeb\x17\x48\x31\xc0\xb0\x01\x48\x89\xc7\x5e\x48\x31\xd2\xb2\x0d\x0f\x05\x48\x31\xc0\xb0\x3c\x0f\x05\xe8\xe4\xff\xff\xff\x48\x65\x6c\x6c\x6f\x20\x57\x6f\x72\x6c\x64\x21\x0a";                                                                                                                                                                 
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+int main()                                                                                                                                                              
+{                                                                                                                                                                       
+        printf("Shellcode Length: %d\n", (int)strlen(code));                                                                                                            
+                                                                                                                                                                        
+        int (*ret)() = (int(*)())code;                                                                                                                                  
+                                                                                                                                                                        
+        ret();                                                                                                                                                          
+}  
