@@ -40,17 +40,14 @@ main:
     ;mov rsi, rsp
     push rsp
     pop rsi
-    mov al, 0x3b
+    mov al, 0x3b\
     syscall
  */
 
 #include <stdio.h>                                                                                                                                                      
 #include <string.h>                                                                                                                                                     
                                                                                                                                                                         
-unsigned char code[] = \                                                                                                                                                "\xeb\x17\x48\x31\xc0\xb0\x01\x48\x89\xc7\x5e\x48\x31\xd2\xb2\x0d\x0f\x05\x48\x31\xc0\xb0\x3c\x0f\x05\xe8\xe4\xff\xff\xff\x48\x65\x6c\x6c\x6f\x20\x57\x6f\x72\x6c\x64\x21\x0a";                                                                                                                                                                 
-                                                                                                                                                                        
-                                                                                                                                                                        
-                                                                                                                                                                        
+unsigned char code[] = "\0xshellc0de";                                                                                                                                                  
 int main()                                                                                                                                                              
 {                                                                                                                                                                       
         printf("Shellcode Length: %d\n", (int)strlen(code));                                                                                                            
