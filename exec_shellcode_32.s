@@ -6,7 +6,7 @@
 bits 32
 section .bss
 section .data
-section .text
+section .mytext progbits alloc exec write align=16      ; required to diable Data Execution Prevention for testing 
         global _start
 _start:
         jmp short two
