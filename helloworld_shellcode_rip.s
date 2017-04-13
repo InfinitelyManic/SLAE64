@@ -1,4 +1,6 @@
 ;  code from course: http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/
+;  nasm -felf64 -g -F dwarf helloworld_shellcode_rip.s -o helloworld_shellcode_rip.o && ld helloworld_shellcode_rip.o -o helloworld_shellcode_rip
+; 
 DEFAULT REL
 section .text
         global _start
