@@ -1,1 +1,4 @@
-
+Create a Shell_Bind_TCP shellcode
+– Binds to a port
+– Needs a “Passcode”
+– If Passcode is correct then Execs Shell
