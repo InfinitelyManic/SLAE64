@@ -1,1 +1,4 @@
-
+Create a Shell_Reverse_TCP shellcode
+– Reverse connects to configured IP and Port
+– Needs a “Passcode”
+– If Passcode is correct then Execs Shell
