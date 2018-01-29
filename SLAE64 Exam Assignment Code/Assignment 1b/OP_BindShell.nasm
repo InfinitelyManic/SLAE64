@@ -1,3 +1,4 @@
+; Original code post from http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/index.html
 global _start
 
 
