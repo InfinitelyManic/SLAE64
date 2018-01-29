@@ -1,4 +1,4 @@
-objdump -d -M intel bindshell_rm_nulls 
+$ objdump -d -M intel bindshell_rm_nulls 
 
 bindshell_rm_nulls:     file format elf64-x86-64
 
