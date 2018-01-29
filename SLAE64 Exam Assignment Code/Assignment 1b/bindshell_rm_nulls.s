@@ -2,6 +2,7 @@
 ; edited David @InfinitelyManic
 ; remove nulls from bind shell code
 ; nasm -f elf64 -g -F dwarf bindshell_rm_nulls.s -o bindshell_rm_nulls.o  && ld bindshell_rm_nulls.o -o bindshell_rm_nulls
+;
 section .text
         global _start
 
