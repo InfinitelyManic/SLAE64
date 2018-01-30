@@ -1,7 +1,7 @@
 ; David @InfinitelyManic
 ; Code provided/inspired by http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/
 ; bind shell w/ passcode
-;
+
 section .text
         global _start
 
