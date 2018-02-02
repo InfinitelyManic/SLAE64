@@ -1,4 +1,7 @@
-;
+; David @InfinitelyManic
+; NASM x86-64 assembly code derived from http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/
+
+
 global _start
 
 
