@@ -1,9 +1,6 @@
 ; David @InfinitelyManic
-; Code provide|inspired by  http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/
-; connect back shell or reverse bind shell
-; create passcode auth
-; remove the nulls later
-; shrink code 
+; NASM x86-64 assembly code derived from http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/
+
 
 section .text
         global _start
