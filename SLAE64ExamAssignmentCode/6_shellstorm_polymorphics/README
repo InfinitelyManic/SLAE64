@@ -13,8 +13,12 @@ Source: http://shell-storm.org/shellcode/
 
 samples source:
 
+
+shellcode-603
 http://shell-storm.org/shellcode/files/shellcode-603.php
 
+shellcode-896
 http://shell-storm.org/shellcode/files/shellcode-896.php
 
+shellcode-878
 http://shell-storm.org/shellcode/files/shellcode-878.php
