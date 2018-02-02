@@ -1,6 +1,5 @@
 ; David @InfinitelyManic
-; Code provided/inspired by http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/
-; bind shell w/ passcode
+; NASM x86-64 assembly code derived from http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/
 
 section .text
         global _start
