@@ -1,6 +1,6 @@
-; original code by http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/index.html
-; edited David @InfinitelyManic
-; remove nulls from bind shell code
+; David @InfinitelyManic
+; NASM x86-64 assembly code derived from http://www.securitytube-training.com/online-courses/x8664-assembly-and-shellcoding-on-linux/
+
 
 section .text
         global _start
