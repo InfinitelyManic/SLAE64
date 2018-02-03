@@ -46,7 +46,63 @@ shellcode-896
 123 bytes max ; my code 
 http://shell-storm.org/shellcode/files/shellcode-896.php
 
+$ strings 896_polymorphics
+/etc////I
+///hostsARAPH
+127.1.1.1 google.lk,
+896_polymorphics.s
+NASM 2.11.08
+896_polymorphics.s
+=K==!
+//==Y1/=K1!/1=K1=/=1Y
+896_polymorphics.s
+write
+text
+__bss_start
+_edata
+_end
+.symtab
+.strtab
+.shstrtab
+.text
+.debug_aranges
+.debug_pubnames
+.debug_info
+.debug_abbrev
+.debug_line
+.debug_frame
+.debug_loc
+
+
 shellcode-878
 110 bytes
 165 bytes max ; my code 
 http://shell-storm.org/shellcode/files/shellcode-878.php
+
+s$ strings 878_polymorphics
+/etc/passwdA,
+878_polymorphics.s
+NASM 2.11.08
+878_polymorphics.s
+2"L=/=1YK==K=1=K==/1=/1Y
+878_polymorphics.s
+_readfile
+_push_filename
+path
+__bss_start
+_edata
+_end
+.symtab
+.strtab
+.shstrtab
+.text
+.debug_aranges
+.debug_pubnames
+.debug_info
+.debug_abbrev
+.debug_line
+.debug_frame
+.debug_loc
+
+
+
