@@ -15,10 +15,16 @@ samples source:
 
 
 shellcode-603
+30 bytes
+45 bytes max ; my code 
 http://shell-storm.org/shellcode/files/shellcode-603.php
 
 shellcode-896
+82 bytes
+123 bytes max ; my code 
 http://shell-storm.org/shellcode/files/shellcode-896.php
 
 shellcode-878
+110 bytes
+165 bytes max ; my code 
 http://shell-storm.org/shellcode/files/shellcode-878.php
