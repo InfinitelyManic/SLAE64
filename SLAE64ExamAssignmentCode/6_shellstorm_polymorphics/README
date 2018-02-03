@@ -18,6 +18,29 @@ shellcode-603
 45 bytes max ; my code 
 http://shell-storm.org/shellcode/files/shellcode-603.php
 
+$ strings 603_polymorphics
+//bin/shH
+603_polymorphics.s
+NASM 2.11.08
+603_polymorphics.s
+K!=!!=/
+603_polymorphics.s
+__bss_start
+_edata
+_end
+.symtab
+.strtab
+.shstrtab
+.text
+.debug_aranges
+.debug_pubnames
+.debug_info
+.debug_abbrev
+.debug_line
+.debug_frame
+.debug_loc
+
+
 shellcode-896
 82 bytes
 123 bytes max ; my code 
