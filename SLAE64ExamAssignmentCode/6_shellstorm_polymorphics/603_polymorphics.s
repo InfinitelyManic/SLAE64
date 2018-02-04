@@ -5,6 +5,7 @@ section .text
 
 _start:
 	;xor   rdx, rdx
+	;--------------
 	cdq				; rax = 0 is implied so edx is set to 0
 
 	mov	qword rbx, '//bin/sh'	; extra / to bring to 8 chars  
@@ -19,7 +20,8 @@ _start:
 	push	rdi			; second 
 	mov	rsi, rsp		; execve struct
 
-;	mov al,	0x3b			; execve syscall  
+	; mov al,	0x3b			; execve syscall  
+	; ------------
 	push byte 0x3b
 	pop rax
 
