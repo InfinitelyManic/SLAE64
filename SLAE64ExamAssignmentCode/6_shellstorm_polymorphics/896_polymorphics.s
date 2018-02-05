@@ -1,4 +1,6 @@
 
+; David @InfinitelyManic
+; original code http://shell-storm.org/shellcode/files/shellcode-896.php
 global _start
     section .text
 
