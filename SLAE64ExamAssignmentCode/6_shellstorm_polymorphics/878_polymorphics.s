@@ -18,7 +18,6 @@ xor byte [rdi + 11], 0x41
 push byte 2				; symantically equiv
 pop rax					; symantically equiv
 
-
 xchg rbx, rbp				; nop equiv
 dec r10					; nop equiv
 
