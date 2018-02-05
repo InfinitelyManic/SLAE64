@@ -1,5 +1,5 @@
 ; David @InfinitelyManic
-;
+; original code http://shell-storm.org/shellcode/files/shellcode-603.php
 section .text
 	global _start
 
