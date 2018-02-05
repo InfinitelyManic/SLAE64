@@ -14,19 +14,25 @@ Source: http://shell-storm.org/shellcode/
 samples:
 
 shellcode-603
-30 bytes
-__ bytes max ; my code 
 http://shell-storm.org/shellcode/files/shellcode-603.php
+30 bytes
+45 bytes max 
+__ bytes my code 
+
 
 shellcode-878
-110 bytes
-___ bytes max ; my code 
 http://shell-storm.org/shellcode/files/shellcode-878.php
+110 bytes
+165 bytes max 
+___ bytes my code 
+
 
 shellcode-896
-82 bytes
-__ bytes max ; my code 
 http://shell-storm.org/shellcode/files/shellcode-896.php
+82 bytes
+123 bytes max
+___ bytes my code 
+
 
 
 
