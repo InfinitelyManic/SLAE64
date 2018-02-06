@@ -26,7 +26,7 @@ _start:
 	push 1			; symatically equiv
 	add word [rsp], 0x411	
 	pop rsi			
-	sub rsi, 0x10		
+	sub rsi, 0x11		
 
     syscall
 
