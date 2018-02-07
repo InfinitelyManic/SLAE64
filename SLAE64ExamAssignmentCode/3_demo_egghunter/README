@@ -3,3 +3,9 @@ Study about the Egg Hunter shellcode
 • Create a working demo of the Egghunter
 
 • Should be configurable for different payloads
+
+
+Sample code:
+https://www.exploit-db.com/exploits/41909/
+
+https://www.exploit-db.com/exploits/43953/
