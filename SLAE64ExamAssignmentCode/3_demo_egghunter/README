@@ -6,6 +6,8 @@ Study about the Egg Hunter shellcode
 
 Notes re Egg Hunter concept:
 
+http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf
+
 https://www.exploit-db.com/docs/english/18482-egg-hunter---a-twist-in-buffer-overflow.pdf
 
 https://www.usna.edu/Users/cs/aviv/classes/si485h/s17/units/04/unit.html#org1116ef4
