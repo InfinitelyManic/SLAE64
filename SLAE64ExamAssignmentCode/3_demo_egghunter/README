@@ -5,11 +5,14 @@ Study about the Egg Hunter shellcode
 • Should be configurable for different payloads
 
 
-Sample code:
+Sample egghunter x86-64 code:
+
 https://www.exploit-db.com/exploits/41909/
 
 https://www.exploit-db.com/exploits/43953/
 
 http://shell-storm.org/shellcode/files/shellcode-884.php
+
+http://shell-storm.org/shellcode/files/shellcode-894.php
 
 
