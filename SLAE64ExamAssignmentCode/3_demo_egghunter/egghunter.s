@@ -6,7 +6,6 @@ section .text
 	global _start
 _start:
 	xor edx, edx
-;	mov edx, 0x00600000		; estimate of starting location of egg
 L0:
 	or dx, 0xfff			; prep 4096 PAGE_SIZE boundary - no nulls
 L1:
